@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://avatars.akamai.steamstatic.com/ https://steamcdn-a.akamaihd.net/; script-src 'self'">
+    <link rel="stylesheet" href="index.css">
+    <title>Steam Profile Viewer</title>
+  </head>
+  <body>
+    <h1 id="mainTitle">Hey, Who you looking for?</h1>
+    <img id="pfp">
+    <p id="level"></p>
+    <input placeholder="Enter steam user URL or ID" id="searchbar">
+    <div class="subinfo">
+      <p id="id"></p>
+      <p id="realname"></p>
+      <p id="countrycode"></p>
+  
+      <ul class="mostPlayedGames">
+        <h3 id="mostPlayedGamesHeader"></h3>
+        <img src="" alt="" id="game1" class = "gameIcon">
+        <img src="" alt="" id="game2" class = "gameIcon">
+        <img src="" alt="" id="game3" class = "gameIcon">
+        <img src="" alt="" id="game4" class = "gameIcon">
+        <img src="" alt="" id="game5" class = "gameIcon">
+        <p id="totalhrs"></p>
+      </ul>
+    </div>
+  </body>
+  <script src="./renderer.js"></script>
+</html>

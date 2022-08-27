@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap');
+
+body{
+    padding: 0;
+    margin:0;
+    background-color: #212121;
+    color:#EEEEEE;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    user-select: none;
+}
+ul{
+   padding:0;
+   list-style-type: none;
+}
+
+.mostPlayedGames{
+    background-color: #161616;
+    width: 220px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.gameIcon{
+    border-radius: 6px;
+}
+
+.subinfo{
+    font-family: 'Roboto Mono', monospace;
+}
+
+#pfp{
+    transition-duration: 0.3s;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 5px #870d0d;
+}
+#pfp:hover{
+    box-shadow: 0 0 18px 9px #870d0d;
+}
+#searchbar{
+    width: 215px;
+    border: 1px solid #870d0d;
+    border-radius: 2px;
+    transition-duration: 0.3s;
+}
+#searchbar:hover{
+    width:245px;
+    box-shadow: 0 0 4px 2px #870d0d;
+}
+#searchbar:focus{
+    width:245px;
+    box-shadow: 0 0 6px 3px #870d0d;
+}
