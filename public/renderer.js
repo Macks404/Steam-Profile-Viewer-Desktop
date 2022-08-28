@@ -27,39 +27,45 @@ searchbar.addEventListener("keypress",(e)=>{
 
 async function GetAccountData()
 {
-    let res
     if(i === 0)
     {
-        res = await window.electronAPI.sendAccData("https://steamcommunity.com/profiles/76561199071734041")
-        i += 1
+        await window.electronAPI.sendProfUrl("https://steamcommunity.com/profiles/76561199071734041")
+
+        window.electronAPI.sendProfData((e,val)=>{
+            UpdateUI(val)
+        })
+        i+=1
     }
+
     else
     {
-        res = await window.electronAPI.sendAccData(searchbar.value)
+        await window.electronAPI.sendProfUrl(searchbar.value)
+
+        window.electronAPI.sendProfData((e,val)=>{
+            UpdateUI(val)
+        })
     }
-
-    
-
-    console.log(res[3])
-
-    if(res[3] < 1)
+}
+function UpdateUI(res)
+{
+    if(res.totalHoursPlayed < 1)
     {
         console.log("small")
         totalHrs.innerText = "<1 Hour"
     }
-    mainTitle.innerText = `${res[0].nickname}`;
-    level.innerText =  `LVL ${res[1]}`
-    id.innerText = `Steam ID: ${res[0].steamID}`
-    pfp.src = res[0].avatar.large;
-    realname.innerText = `Real Name: ${res[0].realName}`
-    countrycode.innerText = `Country Code: ${res[0].countryCode}`
+    mainTitle.innerText = `${res.steamBasicInfo.nickname}`;
+    level.innerText =  `LVL ${res.steamUserLevel}`
+    id.innerText = `Steam ID: ${res.steamBasicInfo.steamID}`
+    pfp.src = res.steamBasicInfo.avatar.large;
+    realname.innerText = `Real Name: ${res.steamBasicInfo.realName}`
+    countrycode.innerText = `Country Code: ${res.steamBasicInfo.countryCode}`
     mostPlayedGamesHeader.innerText = "Most Played Games:"
 
     for(let i = 0; i < mostPlayedGames.length; i++)
     {
-        mostPlayedGames[i].src = res[2][i].iconURL
+        mostPlayedGames[i].src = res.mostPlayedGames[i].iconURL
     }
 
 
-    totalHrs.innerText = `Total Play Time: ${Math.round(res[3])} Hours`
+    totalHrs.innerText = `Total Play Time: ${Math.round(res.totalHoursPlayed)} Hours`
 }

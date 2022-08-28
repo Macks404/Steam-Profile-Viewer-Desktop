@@ -1,17 +1,34 @@
 {
-  "name": "account-app---electron",
+  "name": "steam-profile-viewer",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Native Steam Profile Viewer Created By Macks404 In Electron With Features Like Displaying Your Total Hours",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Macks404",
+  "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
     "dotenv": "^16.0.1",
     "electron": "^20.1.0",
-    "steamapi": "^2.2.0"
+    "electron-builder": "^23.3.3",
+    "node-fetch": "^2.6.7"
+  },
+  "build": {
+    "appId": "com.macks404.spv",
+    "productName": "Steam Profile Viewer",
+    "target": "NSIS",
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    }
   }
 }

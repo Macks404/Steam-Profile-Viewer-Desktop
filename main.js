@@ -1,13 +1,20 @@
-require("dotenv").config()
-
 const {app, BrowserWindow, ipcMain} = require("electron");
-const steamapi = require("steamapi");
-const steam = new steamapi(process.env.KEY);
 const path = require("path");
+const cors = require("cors")
+const express = require("express")
+const appE = express()
+const fetch = require("node-fetch")
+
+appE.use(express.json())
+appE.use(cors())
+
+let win
+
+const sessionID = Math.round(Math.floor(Math.random() * 1000000) / Math.floor(Math.random()*100))
 
 function InitWindow()
 {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width:475,
         height:635,
         resizable:false,
@@ -21,51 +28,39 @@ function InitWindow()
 
 app.whenReady().then(()=>{
     InitWindow();
-    ipcMain.handle("send-acc-data", GetAccountData)
+    ipcMain.handle("send-prof-url", SendProfileURL)
 })
 
-async function GetAccountData(thing,url)
-{
-    steamID = await steam.resolve(url)
-    steamBasicInfo = await steam.getUserSummary(steamID)
-    steamUserLevel = await steam.getUserLevel(steamID)
-    steamGames = await steam.getUserOwnedGames(steamID)
-    
-    let mostPlayedGames
-    let totalMinsPlayed = 0
-    let totalHoursPlayed = 0
-
-    if(steamGames.length <= 5)
-    {
-        mostPlayedGames = new Array(steamGames.length)
-    }
-    else
-    {
-        mostPlayedGames = new Array(5)
-    }
-
-    for(let e = 0; e < mostPlayedGames.length; e++)
-    {
-        for(let i = 0; i < steamGames.length; i++)
-        {
-            if(e == 0)
-            {
-                totalMinsPlayed += steamGames[i].playTime
-            }
-            for(let k = 0; k < mostPlayedGames.length; k++)
-            {
-                if(mostPlayedGames[k] === undefined)
-                {
-                    mostPlayedGames[k] = steamGames[i]
-                }
-                else if(steamGames[i].playTime > mostPlayedGames[k].playTime && !mostPlayedGames.includes(steamGames[i]))
-                {
-                    mostPlayedGames[k] = steamGames[i]
-                }
-            }
+async function SendProfileURL(stuff,url)
+{   
+    const options = {
+        method: "POST",
+        body: JSON.stringify({
+            sessionID,
+            url,
+        }),
+        headers:{
+            "Content-Type":"application/json"
         }
     }
-    totalHoursPlayed = totalMinsPlayed / 60
-    
-    return [steamBasicInfo,steamUserLevel, mostPlayedGames, totalHoursPlayed]
+    //send the url
+    fetch("http://localhost:3000/spvn/url",options)
+    console.log("Sent URL Data")
 }
+async function SendAccountData(data)
+{
+    win.webContents.send("send-prof-data",data)
+    console.log("Sent Profile Data To Frontend")
+}
+
+appE.post("/spvn/data",async (req,res)=>{
+    console.log("Received Session ID Data:",req.body.sessionID)
+    if(req.body.sessionID == sessionID)
+    {
+        console.log("The session ID matches, this is my data!")
+        SendAccountData(req.body.data)
+    }
+})
+appE.listen(3001,()=>{
+    console.log("Listening On Port 3001...")
+})
