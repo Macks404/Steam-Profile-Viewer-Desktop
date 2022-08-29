@@ -14,37 +14,44 @@ const mostPlayedGames = [
     document.getElementById("game5")
 ];
 const totalHrs = document.getElementById("totalhrs")
-let i = 0
 
+i=0
 GetAccountData()
 
 searchbar.addEventListener("keypress",(e)=>{
     if(e.key === "Enter")
     {
+        console.log("enter heard")
         GetAccountData()
     }
 })
 
-async function GetAccountData()
+function GetAccountData()
 {
     if(i === 0)
     {
-        await window.electronAPI.sendProfUrl("https://steamcommunity.com/profiles/76561199071734041")
-
+        console.log("Get account data called")
+        window.electronAPI.sendProfUrl("https://steamcommunity.com/profiles/76561199071734041/")
+        console.log("Url Sent")
+    
         window.electronAPI.sendProfData((e,val)=>{
+            console.log("Send Prof Data :D")
             UpdateUI(val)
         })
         i+=1
     }
-
     else
     {
-        await window.electronAPI.sendProfUrl(searchbar.value)
-
+        console.log("Get account data called")
+        window.electronAPI.sendProfUrl(searchbar.value)
+        console.log("Url Sent")
+    
         window.electronAPI.sendProfData((e,val)=>{
+            console.log("Send Prof Data :D")
             UpdateUI(val)
         })
     }
+
 }
 function UpdateUI(res)
 {
