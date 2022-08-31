@@ -10,7 +10,7 @@ function InitWindow()
         width:475,
         height:635,
         resizable:false,
-        autoHideMenuBar: false,
+        autoHideMenuBar: true,
         webPreferences:{
             preload: path.join(__dirname,"preload.js"),
         },
@@ -30,8 +30,7 @@ function openUrl(stuff, url)
 }
 async function GetAccountData(stuff,url)
 {
-    // const res = await fetch(`https://spv-native-backend.herokuapp.com/spvn/data?steamprof=${url}`)
-    const res = await fetch(`http://localhost:3000/spvn/data?steamprof=${url}`)
+    const res = await fetch(`https://spv-native-backend.herokuapp.com/spvn/data?steamprof=${url}`)
     const data = await res.json()
 
     SendAccountData(data)
