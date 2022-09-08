@@ -5,7 +5,6 @@ This is an app that allows users to insert a [steam profile link](https://steamc
  - Total Hours Played
  - Steam Level
 #####
-This app will have more updates coming forward with ideas such seing how much your account is worth, etc..
 
 ---
 ## Screenshot of release v1.0.0:
