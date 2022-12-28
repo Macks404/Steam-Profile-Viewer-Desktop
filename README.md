@@ -1,4 +1,4 @@
-# Steam Profile Viewer (Desktop Version)
+# Steam Profile Viewer (Desktop Version) *NOT WORKING - HEROKU NO LONGER FREE*
 
 This is an app that allows users to insert a [steam profile link](https://steamcommunity.com/profiles/76561199071734041/) or [steam profile ID](https://www.steamidfinder.com/) to view their stats such as:
  - Most Played Games
